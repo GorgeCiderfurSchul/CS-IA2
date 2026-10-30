@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Physics Calculator</title>
+</head>
+
+<body>
+    <h1>Physics Calculator</h1>
+    <p>Test your calculator interface here.</p>
+
+    <form action="{{ url_for('return_equation')  }}" method="post">
+
+        <label for="equation_display">Equation:</label>
+    <!--id attribute - ties an input to the label; name attribute - adds a name by which input can be retrieved-->
+        <input
+                type="text"
+                id="equation_display"
+                name="equation"
+                placeholder="Enter your equation"
+        >
+        <button type="submit">Solve</button>
+
+        <label>{{solved_equation}}</label>
+    </form>
+    <h2>Results</h2>
+    <p>Your results will appear here.</p>
+
+    <h2>Graph</h2>
+    <p>Your Matplotlib graph will appear here.</p>
+    <form action="{{ url_for('return_equation')  }}" method="post">
+
+        <label for="graph_equation" style="font-size: 20px; width: 300px; height: 25px;">
+            f(x)=
+        </label>
+
+        <input
+                id="graph_equation"
+                type="text"
+                name="graph_equation"
+                placeholder="Enter your graph equation"
+                style="width: 300px; height: 25px;"
+        >
+        <button type="submit">Graph</button>
+    </form>
+    <img src="{{ plot_url }}" alt="Physics graph" style="max-width: 100%; height: auto">
+</body>
+</html>
