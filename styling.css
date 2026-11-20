@@ -26,14 +26,11 @@ body {
     margin-right: 2px;
     font-family: "Saira", sans-serif;
     font-weight: bold;
+    transition: background-color 0.10s;
 }
 .num-pad form {
     display: inline-flex;
     margin: 10px;
-}
-.num-pad .angle-unit-button {
-    width: 50px;
-    left: 100px;
 }
 
 .equation-solver #equation_solver_display {
@@ -46,21 +43,49 @@ body {
 }
 .graph ul {
     list-style-type: none;
+    padding-left: 0;
+    display: grid;
+    gap: 10px;
 }
 
-/*dropdown list section*/
-.dropdown-settings {
-  background-color: #3498DB;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
+.graph li {
+    display: grid;
+    grid-template-columns: 120px 200px;
+    align-items: center;
 }
 
+.graph li input, .graph li select {
+    width: 100%;
+    box-sizing: border-box;
+}
+/*
+.graph ul input {
+    width: 100%;
+    box-sizing: border-box;
+}
+ */
+.graph li select {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.graph input {
+    font-family: "Saira", sans-serif;
+}
+
+/*dropdown list button*/
+.settings-dropbtn {
+    background-color: #008B8B;
+    color: black;
+    padding: 10px 30px;
+    font-size: 16px;
+    border: black;
+    cursor: pointer;
+    font-family: "Saira", sans-serif;
+}
 /* Dropdown button on hover & focus */
-.dropdown-settings:hover, .dropdown-settings:focus {
-  background-color: #2980B9;
+.settings-dropbtn:hover, .settings-dropbtn:focus {
+  background-color: #2980B4;
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -71,14 +96,43 @@ body {
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    margin: 0;
 }
 
+.dropdown-content button  {
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    width: 100%;
+    border: none;
+    font-family: "Saira", sans-serif;
+    box-sizing: border-box;
+}
+
+.dropdown-content button:hover {
+    background-color: lightgray;
+}
+#angle-unit-button {
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    width:100%
+}
+.dropdown-content .dropdown {
+    display: block;
+}
+.dropdown-content .dropdown-content {
+    top: 0;
+    left: 100%;
+}
 /* Links inside the dropdown */
 .dropdown-content a {
   color: black;
@@ -92,3 +146,13 @@ body {
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
+
+.expression-solver input {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 60px;
+    font-family: "Saira", sans-serif;
+}
+.expression-solver button {
+    padding: 7px;
+}

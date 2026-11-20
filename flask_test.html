@@ -19,64 +19,82 @@
     <header class="settings-panel">
         <nav>
             <div class="dropdown">
-              <button onclick="myFunction()" class="dropdown-settings">Settings</button>
-              <div id="myDropdown" class="dropdown-content">
-                  <button type="button">example button</button>
-                  <button type="button">wow, another example button</button>
-              </div>
+                <button onclick="dropdownFunction('dropdownSettings')" class="settings-dropbtn">Settings</button>
+                <div id="dropdownSettings" class="dropdown-content">
+                    <button type="button">example button</button>
+                    <button type="button">wow, another example button</button>
+                    <form action="{{ url_for('return_equation')  }}" method="post">
+                        <button id="angle-unit-button" type="submit" name ="angle_unit" value="angle_unit_request"> {{ angle_unit }}</button>
+                    </form>
+                </div>
             </div>
         </nav>
     </header>
+
     <p>Testing paragraph</p>
     <div class="expression-solver">
         <form action="{{ url_for('return_equation')  }}" method="post">
 
-            <label for="equation_display"></label>
+            <label for="expression_input"></label>
 
         <!--id attribute - ties an input to the label; name attribute - adds a name by which input can be retrieved-->
 
             <input
                     type="text"
-                    id="equation_display"
+                    id="expression_input"
                     name="expression"
                     placeholder="Enter your expression"
-                    style="width: 300px; height: 23px"
             >
-            <button type="submit" name="expression_button" value="default_expression_request" style="width: 80px; height: 25px">Calculate</button>
-            <label>{{solved_expression}}</label>
+            <button type="submit" name="expression_button" value="default_expression_request">Calculate</button>
+            <label id="solved_expression">{{solved_expression}}</label>
         </form>
-    </div>
-    <div class="num-pad">
-        <div class ="first-row">
-            <Button type="button" data-value="0">0</Button>
-            <Button type="button" data-value="1">1</Button>
-            <Button class="anchor-button" type="button" data-value="2">2</Button>
-            <form action="{{ url_for('return_equation')  }}" method="post">
-                <button class="angle-unit-button" type="submit" name ="angle_unit" value="angle_unit_request" style="width: 70px; height: 23px"> {{ angle_unit }}</button>
-            </form>
+        <div class="num-pad">
+            <Button id="num-0" type="button" data-value="0">0</Button>
+            <Button id="num-1" type="button" data-value="1">1</Button>
+            <Button id="num-2" type="button" data-value="2">2</Button>
+            <br>
+            <Button id="num-3" type="button" data-value="3">3</Button>
+            <Button id="num-4" type="button" data-value="4">4</Button>
+            <Button id="num-5" type="button" data-value="5">5</Button>
+            <br>
+            <Button id="num-6" type="button" data-value="6">6</Button>
+            <Button id="num-7" type="button" data-value="7">7</Button>
+            <Button id="num-8" type="button" data-value="8">8</Button>
+            <br>
+            <Button id="num-9" type="button" data-value="9">9</Button>
+            <Button id="num-+" type="button" data-value="+">+</Button>
+            <Button id="num--" type="button" data-value="-">-</Button>
+            <br>
+            <Button id="num-(" type="button" data-value="(">(</Button>
+            <Button id="num-)" type="button" data-value=")">)</Button>
         </div>
-        <Button type="button" data-value="3">3</Button>
-        <Button type="button" data-value="4">4</Button>
-        <Button type="button" data-value="5">5</Button>
-        <br>
-        <Button type="button" data-value="6">6</Button>
-        <Button type="button" data-value="7">7</Button>
-        <Button type="button" data-value="8">8</Button>
-        <br>
-        <Button type="button" data-value="9">9</Button>
-        <Button type="button" data-value="+">+</Button>
-        <Button type="button" data-value="-">-</Button>
-        <br>
-        <Button type="button" data-value="(">(</Button>
-        <Button type="button" data-value=")">)</Button>
     </div>
     <div class="equation-solver">
         <h2>Equation solver</h2>
+        <!--dropdown container and button-->
+        <div class="dropdown">
+            <button onclick="dropdownFunction('dropdownEquations')" class="equations-dropbtn">
+                Template equations
+            </button>
+            <!--content of dropdown-->
+            <div id="dropdownEquations" class="dropdown-content">
+                <button>Basic Geometry</button>
+                <button>Complex Geometry</button>
+                <div class="dropdown">
+                    <button onclick="dropdownFunction('dropdownPhysicsEquations')" class="physics-dropbtn">Physics</button>
+                    <div id="dropdownPhysicsEquations" class="dropdown-content">
+                        <button>Newton's 1st Law</button>
+                        <button>Newton's 2nd Law</button>
+                        <Button>Newton's 3rd Law</Button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <form action="{{ url_for('return_equation')  }}" method="post">
-            <label for="equation_solver_display"></label>
+            <label for="equation_solver_input"></label>
             <input
             type="text"
-            id="equation_solver_display"
+            id="equation_solver_input"
             name="input_equation_solver"
             placeholder="Enter your equation"
             >
@@ -87,7 +105,7 @@
                 name="arg_input"
                 placeholder="x, y, a, b"
                 >
-            <button type="submit" name="equation_solver_button" value="equation_solver_request">Solve</button>
+            <button type="submit" name="equation_solver_button" id="equation_solver_button" value="equation_solver_request">Solve</button>
             <label>{{solved_equation}}</label>
         </form>
     </div>
@@ -96,16 +114,15 @@
         <p>Another testing paragraph</p>
         <form name="graph_form" action="{{ url_for('return_equation')  }}" method="post">
 
-            <label for="graph_equation_display" style="font-size: 20px; width: 300px; height: 25px;">
+            <label for="graph_equation_input">
                 f(x)=
             </label>
 
             <input
-                    id="graph_equation_display"
+                    id="graph_equation_input"
                     type="text"
                     name="graph_equation"
                     placeholder="Enter your graph equation"
-                    style="width: 300px; height: 25px;"
                     >
 
             <button type="submit" name="graph" value="graph_request">Graph</button>
