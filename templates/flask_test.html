@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Physics Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styling.css') }}">
+    <script src="{{ url_for('static', filename='Javascript_test.js') }}" defer></script>
+    <!--Saira font link-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+    <h1>Physics Calculator</h1>
+
+    <header class="settings-panel">
+        <nav>
+            <div class="dropdown">
+                <button onclick="dropdownFunction('dropdownSettings')" class="settings-dropbtn">Settings</button>
+                <div id="dropdownSettings" class="dropdown-content">
+                    <button type="button">example button</button>
+                    <button type="button">wow, another example button</button>
+                    <form action="{{ url_for('return_equation')  }}" method="post">
+                        <button id="angle-unit-button" type="submit" name ="angle_unit" value="angle_unit_request"> {{ angle_unit }}</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <p>Testing paragraph</p>
+    <div class="expression-solver">
+        <form action="{{ url_for('return_equation')  }}" method="post">
+
+            <label for="expression_input"></label>
+
+        <!--id attribute - ties an input to the label; name attribute - adds a name by which input can be retrieved-->
+
+            <input
+                    type="text"
+                    id="expression_input"
+                    name="expression"
+                    placeholder="Enter your expression"
+            >
+            <button type="submit" name="expression_button" value="default_expression_request">Calculate</button>
+            <label id="solved_expression">{{solved_expression}}</label>
+        </form>
+        <div class="num-pad">
+            <Button id="num-0" type="button" data-value="0">0</Button>
+            <Button id="num-1" type="button" data-value="1">1</Button>
+            <Button id="num-2" type="button" data-value="2">2</Button>
+            <br>
+            <Button id="num-3" type="button" data-value="3">3</Button>
+            <Button id="num-4" type="button" data-value="4">4</Button>
+            <Button id="num-5" type="button" data-value="5">5</Button>
+            <br>
+            <Button id="num-6" type="button" data-value="6">6</Button>
+            <Button id="num-7" type="button" data-value="7">7</Button>
+            <Button id="num-8" type="button" data-value="8">8</Button>
+            <br>
+            <Button id="num-9" type="button" data-value="9">9</Button>
+            <Button id="num-+" type="button" data-value="+">+</Button>
+            <Button id="num--" type="button" data-value="-">-</Button>
+            <br>
+            <Button id="num-(" type="button" data-value="(">(</Button>
+            <Button id="num-)" type="button" data-value=")">)</Button>
+        </div>
+    </div>
+    <div class="equation-solver">
+        <h2>Equation solver</h2>
+        <!--dropdown container and button-->
+        <div class="dropdown">
+            <button onclick="dropdownFunction('dropdownEquations')" class="equations-dropbtn">
+                Template equations
+            </button>
+            <!--content of dropdown-->
+            <div id="dropdownEquations" class="dropdown-content">
+                <button>Basic Geometry</button>
+                <button>Complex Geometry</button>
+                <div class="dropdown">
+                    <button onclick="dropdownFunction('dropdownPhysicsEquations')" class="physics-dropbtn">Physics</button>
+                    <div id="dropdownPhysicsEquations" class="dropdown-content">
+                        <button>Newton's 1st Law</button>
+                        <button>Newton's 2nd Law</button>
+                        <Button>Newton's 3rd Law</Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form action="{{ url_for('return_equation')  }}" method="post">
+            <label for="equation_solver_input"></label>
+            <input
+            type="text"
+            id="equation_solver_input"
+            name="input_equation_solver"
+            placeholder="Enter your equation"
+            >
+            <label for="args_for_equation_solver"></label>
+            <input
+                type="text"
+                id="args_for_equation_solver"
+                name="arg_input"
+                placeholder="x, y, a, b"
+                >
+            <button type="submit" name="equation_solver_button" id="equation_solver_button" value="equation_solver_request">Solve</button>
+            <label>{{solved_equation}}</label>
+        </form>
+    </div>
+    <div class="graph">
+        <h2>Graph</h2>
+        <p>Another testing paragraph</p>
+        <form name="graph_form" action="{{ url_for('return_equation')  }}" method="post">
+
+            <label for="graph_equation_input">
+                f(x)=
+            </label>
+
+            <input
+                    id="graph_equation_input"
+                    type="text"
+                    name="graph_equation"
+                    placeholder="Enter your graph equation"
+                    >
+
+            <button type="submit" name="graph" value="graph_request">Graph</button>
+
+            <h3>Optional settings</h3>
+            <ul>
+                <li>
+                    <label for="x_label">X label </label>
+                    <input
+                        id="x_label"
+                        type="text"
+                        name="x_label_input"
+                        >
+                </li>
+
+                <li>
+                    <label for="y_label">Y label </label>
+                    <input
+                        id="y_label"
+                        type="text"
+                        name="y_label_input"
+                        >
+                </li>
+                <li>
+                    <label for="x_range">Range of x </label>
+                    <input
+                        id="x_range"
+                        type="text"
+                        name="x_range_input"
+                        placeholder="-10.0, 10.0"
+                        >
+                </li>
+                <li><label for="x_step">Step size </label>
+                    <input
+                        id="x_step"
+                        type="text"
+                        name="x_step_input"
+                        placeholder="0.1"
+                        >
+                </li>
+                <li><label for="color">Line color</label>
+                    <select name="color_select" id="color">
+                        <option value="blue">Blue</option>
+                        <option value="red">Red</option>
+                        <option value="green">Green</option>
+                        <option value="black">Black</option>
+                        <option value="orange">Orange</option>
+                    </select>
+                </li>
+            </ul>
+
+        </form>
+        <img src="{{ plot_url }}" alt="" style="max-width: 100%; height: auto">
+    </div>
+</body>
+</html>
