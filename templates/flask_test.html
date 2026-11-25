@@ -21,10 +21,16 @@
             <div class="dropdown">
                 <button onclick="dropdownFunction('dropdownSettings')" class="settings-dropbtn">Settings</button>
                 <div id="dropdownSettings" class="dropdown-content">
-                    <button type="button">example button</button>
+                    <div class="dropdown">
+                        <button onclick="dropdownFunction('rounding-methods')" class="rounding-dropdown">Rounding</button>
+                        <div id="rounding-methods" class="dropdown-content">
+                            <button id="decimalBtn">Decimal</button>
+                            <button id="significantBtn">Significant figures</button>
+                        </div>
+                    </div>
                     <button type="button">wow, another example button</button>
                     <form action="{{ url_for('return_equation')  }}" method="post">
-                        <button id="angle-unit-button" type="submit" name ="angle_unit" value="angle_unit_request"> {{ angle_unit }}</button>
+                        <button id="angle-unit-button" type="submit" name="angle_unit" value="angle_unit_request">{{ angle_unit }}</button>
                     </form>
                 </div>
             </div>
@@ -125,10 +131,10 @@
                     placeholder="Enter your graph equation"
                     >
 
-            <button type="submit" name="graph" value="graph_request">Graph</button>
+            <button id="graph_button" type="submit" name="graph" value="graph_request">Graph</button>
 
             <h3>Optional settings</h3>
-            <ul>
+            <ul class="option-list">
                 <li>
                     <label for="x_label">X label </label>
                     <input
@@ -137,7 +143,6 @@
                         name="x_label_input"
                         >
                 </li>
-
                 <li>
                     <label for="y_label">Y label </label>
                     <input
@@ -163,8 +168,9 @@
                         placeholder="0.1"
                         >
                 </li>
-                <li><label for="color">Line color</label>
-                    <select name="color_select" id="color">
+                <li>
+                    <label for="color">Line color</label>
+                    <select name="color_select" id="graph_color">
                         <option value="blue">Blue</option>
                         <option value="red">Red</option>
                         <option value="green">Green</option>
@@ -175,7 +181,7 @@
             </ul>
 
         </form>
-        <img src="{{ plot_url }}" alt="" style="max-width: 100%; height: auto">
+        <img id="plot_url" src="{{ plot_url }}" alt="" style="max-width: 100%; height: auto">
     </div>
 </body>
 </html>
