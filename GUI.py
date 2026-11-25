@@ -23,7 +23,7 @@ trig_functions = {
     "cos": sympy.cos,
     "tan": sympy.tan,
     "ctan": sympy.cot
-                }
+}
 transformations = (standard_transformations + (implicit_multiplication_application,) + (convert_xor,))
 
 
@@ -198,9 +198,11 @@ def expression_calculator():
 
 @GUI.route("/equation_solver", methods=["POST"])
 def equation_solver():
+    data = request.get_json()
+    equation = data.get("equation", "") or ""
+    args = data.get("args", "") or ""
     try:
-        equation = (request.get_json()).get("equation", "") or ""
-        solved_equation = solve_equation(equation)
+        solved_equation = solve_equation(equation, args)
         return jsonify({"solved_equation": str(solved_equation)})
 
     except (KeyError, TypeError, ValueError) as error:
@@ -208,10 +210,23 @@ def equation_solver():
         return jsonify({"solved_equation": str(error)})
 
 @GUI.route("/graph", methods=["POST"])
-def graph():
+def return_graph():
     try:
-        graph_equation = (request.get_json()).get("graph", "") or ""
+        unparsed_graph_equation = request.get_json().get("graph_equation", "") or ""
+        graph_equation = parse_expr(unparsed_graph_equation, local_dict=trig_functions_degrees, transformations=transformations)
+        graph_color = request.get_json().get("graph_color", "") or ""
 
+        graph_options = request.get_json().get("graph_options", "") or ""
+        x_label = graph_options[0]["value"] or "X"
+        y_label = graph_options[1]["value"] or "Y"
+        x_range = graph_options[2]["value"] or "-10.0, 10.0"
+        step = graph_options[3]["value"] or "0.1"
+
+        print(graph_options)
+        print(x_label, y_label, x_range, step)
+
+        plot = graph(graph_equation, x_label, y_label, x_range, step, graph_color)
+        return jsonify({"plot": plot})
     except (KeyError, TypeError, ValueError) as error:
         print(error)
         return jsonify({"graph_equation": str(error)})
